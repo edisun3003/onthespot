@@ -434,7 +434,7 @@ def tidal_get_mpd_data(token, item_id):
         params["assetpresentation"] = "FULL"
 
         playback_info = make_call(
-            f"{BASE_URL}/tracks/{item_id}/playbackinfopostpaywall",
+            f"{BASE_URL}/tracks/{item_id}/playbackinfopostpaywall/v4",
             params=params,
             headers=headers,
             skip_cache=False,
