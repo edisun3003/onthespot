@@ -10,9 +10,9 @@ from ..runtimedata import account_pool, get_logger
 from ..utils import conv_list_format, make_call
 
 logger = get_logger("api.tidal")
-CLIENT_ID = b64decode("ZlgySnhkbW50WldLMGl4VA==").decode("utf-8")
+CLIENT_ID = b64decode("NE4zbjZRMXg5NUxMNUs3cA==").decode("utf-8")
 CLIENT_SECRET = b64decode(
-    "MU5uOUFmREFqeHJnSkZKYktOV0xlQXlLR1ZHbUlOdVhQUExIVlhBdnhBZz0="
+    "b0tPWGZKVzM3MWNYNnhhWjBQeWhnR05CZE5MbEJaZDRBS0tZb3VnTWppa2M9"
 ).decode("utf-8")
 AUTH = (CLIENT_ID, CLIENT_SECRET)
 AUTH_URL = "https://auth.tidal.com/v1/oauth2"
@@ -427,7 +427,7 @@ def tidal_get_mpd_data(token, item_id):
     headers = {}
     headers["Authorization"] = f"Bearer {token['access_token']}"
 
-    for quality in ["LOSSLESS", "HIGH", "LOW"]:
+    for quality in ["HI_RES_LOSSLESS", "LOSSLESS", "HIGH", "LOW"]:
         params = {}
         params["audioquality"] = quality
         params["playbackmode"] = "STREAM"
