@@ -167,6 +167,7 @@ def bandcamp_get_track_metadata(_, url):
         track_data.get("embed", {}).get("album_embed_data", {}).get("album_title")
     )
     info["release_year"] = year
+    info["album_release_year"] = info["release_year"]
     info["track_number"] = (
         track_data.get("tralbum", {}).get("current", {}).get("track_number")
     )

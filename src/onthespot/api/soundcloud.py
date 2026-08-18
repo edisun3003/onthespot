@@ -392,6 +392,7 @@ def soundcloud_get_track_metadata(token, item_id):
     info["release_year"] = (
         release_date.split("-")[0] if release_date else last_modified.split("-")[0]
     )
+    info["album_release_year"] = info["release_year"]
 
     info["title"] = track_data.get("title")
     info["track_number"] = track_number

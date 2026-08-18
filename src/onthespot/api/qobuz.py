@@ -313,6 +313,7 @@ def qobuz_get_track_metadata(token, item_id):
     info["release_year"] = (
         track_data.get("album", {}).get("release_date_original").split("-")[0]
     )
+    info["album_release_year"] = info["release_year"]
     info["description"] = track_data.get("album", {}).get("description")
     info["total_discs"] = track_data.get("album", {}).get("media_count")
 

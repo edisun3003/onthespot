@@ -914,6 +914,7 @@ def spotify_get_track_metadata(token, item_id):
         .get("release_date")
         .split("-")[0]
     )
+    info["album_release_year"] = info["release_year"]
     info["track_number"] = track_number
     info["total_tracks"] = (
         track_data.get("tracks", [{}])[0].get("album", {}).get("total_tracks")
@@ -1031,6 +1032,7 @@ def spotify_get_podcast_episode_metadata(token, episode_id):
     info["title"] = episode_data.get("name")
     info["image_url"] = episode_data.get("images", [{}])[0].get("url")
     info["release_year"] = episode_data.get("release_date").split("-")[0]
+    info["album_release_year"] = info["release_year"]
     info["track_number"] = track_number
     # Not accurate
     # info['total_tracks'] = episode_data.get('show', {}).get('total_episodes', 0)

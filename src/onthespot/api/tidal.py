@@ -304,6 +304,7 @@ def tidal_get_track_metadata(token, item_id):
         )
     except AttributeError:
         pass
+    info["album_release_year"] = info.get("release_year", "")
     try:
         info["image_url"] = (
             album_data.get("included", [])[0]

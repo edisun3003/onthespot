@@ -129,6 +129,10 @@ def deezer_get_track_metadata(_, item_id):
     info["disc_number"] = track_data.get("disk_number")
     info["total_discs"] = total_discs
     info["release_year"] = track_data.get("release_date").split("-")[0]
+    try:
+        info["album_release_year"] = album_data.get("release_date").split("-")[0]
+    except Exception:
+        info["album_release_year"] = info["release_year"]
     info["explicit"] = track_data.get("explicit_lyrics")
     info["bpm"] = track_data.get("bpm")
     info["artists"] = conv_list_format(artists)

@@ -29,12 +29,24 @@ if [ "$KEEP_BUILD_DIRS" = false ] || [ ! -d "venv" ]; then
     else
         echo " => Creating virtual environment..."
     fi
-    python3 -m venv venv
+    # Find the best Python 3 executable (prefer stable 3.12, 3.11, or 3.10 over newer drafts like 3.14 for PyInstaller/PyQt6 stability on macOS 12)
+    PYTHON_EXE="python3"
+    for py in "python3.12" "python3.11" "python3.10" "python3"; do
+        if command -v "$py" &>/dev/null; then
+            PYTHON_EXE="$py"
+            break
+        fi
+    done
+    echo " => Using Python executable: $PYTHON_EXE"
+
+    $PYTHON_EXE -m venv venv
     source ./venv/bin/activate
 
     echo " => Upgrading pip and installing necessary dependencies..."
     venv/bin/pip install --upgrade pip wheel pyinstaller
-    venv/bin/pip install "pyqt6==6.4.2" "pyqt6-sip==13.5.0"
+    # Explicitly pin PyQt6-Qt6 to the same version as PyQt6 (6.6.1) to avoid downloading
+    # the latest PyQt6-Qt6 binaries (which require macOS 13+ and fail on macOS 12)
+    venv/bin/pip install "pyqt6==6.6.1" "PyQt6-Qt6==6.6.1" "pyqt6-sip>=13.6.0"
     venv/bin/pip install -r requirements.txt
 else
     echo " => Reusing existing virtual environment..."
@@ -58,14 +70,10 @@ if uname -m | grep -q x86_64; then
 	#    cd ../..
 	fi
 else
-    if ! [ -f "builder/ffmpeg-build-script-master" ]; then
-        curl -L -o build/ffmpeg.zip https://github.com/markus-perl/ffmpeg-build-script/archive/refs/heads/master.zip
-        unzip build/ffmpeg.zip -d builder
-        cd builder/ffmpeg-build-script-master
-        ./build-ffmpeg --build --skip-install
-        cd ../..
+    if ! [ -f "dist/ffmpeg" ]; then
+        curl -L -o build/ffmpeg.zip https://ffmpeg.martin-riedl.de/redirect/latest/macos/arm64/release/ffmpeg.zip
+        unzip build/ffmpeg.zip -d dist
     fi
-    cp builder/ffmpeg-build-script-master/workspace/bin/ffmpeg dist/ffmpeg
 fi
 
 
@@ -92,6 +100,8 @@ chmod +x dist/OnTheSpot.app
 
 
 echo " => Creating dmg..."
+rm -rf dist/dmg
+rm -f dist/OnTheSpot.dmg
 mkdir -p dist/dmg
 mv dist/OnTheSpot.app dist/dmg/OnTheSpot.app
 ln -s /Applications dist/dmg

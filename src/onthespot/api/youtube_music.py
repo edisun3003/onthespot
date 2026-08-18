@@ -154,6 +154,7 @@ def youtube_music_get_track_metadata(_, item_id):
     info["release_year"] = str(
         release_year if release_year else info_dict.get("upload_date")[:4]
     )
+    info["album_release_year"] = info["release_year"]
     info["length"] = length
     info["is_playable"] = (
         True

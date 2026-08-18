@@ -103,6 +103,7 @@ def create_failed_metadata(item, error_msg):
         "is_playable": False,
         "explicit": False,
         "release_year": "",
+        "album_release_year": "",
         "track_number": 0,
         "disc_number": 0,
         "total_tracks": 0,

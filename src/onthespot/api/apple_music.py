@@ -327,6 +327,7 @@ def apple_music_get_track_metadata(session, item_id):
         )
     except Exception:
         pass
+    info["album_release_year"] = info.get("release_year", "")
     info["length"] = str(
         track_data.get("data", [])[0].get("attributes", {}).get("durationInMillis")
     )
@@ -384,6 +385,17 @@ def apple_music_get_track_metadata(session, item_id):
         info["album_artists"] = get_primary_composer(info["composer"])
 
     if album_data:
+        try:
+            album_release_date = (
+                album_data.get("data", [])[0]
+                .get("attributes", {})
+                .get("releaseDate")
+            )
+            if album_release_date:
+                info["album_release_year"] = album_release_date.split("-")[0]
+        except Exception:
+            pass
+
         info["copyright"] = (
             album_data.get("data", [])[0].get("attributes", {}).get("copyright")
         )

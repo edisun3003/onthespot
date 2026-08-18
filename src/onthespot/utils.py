@@ -295,6 +295,7 @@ def format_item_path(item, item_metadata):
         service_id=str(item_metadata.get("item_id")),
         name=sanitize_data(name),
         year=sanitize_data(item_metadata.get("release_year")),
+        album_year=sanitize_data(item_metadata.get("album_release_year") or item_metadata.get("release_year")),
         explicit=sanitize_data(
             str(config.get("explicit_label")) if item_metadata.get("explicit") else ""
         ),
@@ -946,6 +947,7 @@ def add_to_m3u_file(item, item_metadata):
             album_type=item_metadata.get("album_type", "single").title(),
             name=item_metadata.get("title"),
             year=item_metadata.get("release_year"),
+            album_year=item_metadata.get("album_release_year") or item_metadata.get("release_year"),
             disc_number=item_metadata.get("disc_number", 1)
             if not config.get("use_double_digit_path_numbers")
             else str(item_metadata.get("disc_number", 1)).zfill(2),

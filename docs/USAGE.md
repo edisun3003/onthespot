@@ -155,6 +155,7 @@ If a file path is provided the app will parse each line in the file for urls beg
    | `{service_id}`    | The track's native id on the selected music service.|
    | `{name}`          | Name of the track.                                  |
    | `{year}`          | Release year of the track.                          |
+   | `{album_year}`    | Release year of the album (falls back to track release year if not available). |
    | `{explicit}`      | Displays 'Explicit Label' if the song is marked explicit (default: 🅴). |
 
 - **Audio Variables**
